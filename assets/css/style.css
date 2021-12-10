@@ -1,0 +1,55 @@
+body {
+    color: white;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+}
+
+header {
+    height: 12vh;
+}
+
+main {
+    height: 85vh;
+}
+.card {
+    background-color: transparent;
+    border-color: transparent;
+    
+}
+
+aside {
+    background-color: #31545B;
+}
+
+.main-img {
+    max-width: 250px;
+    flex: 0 0 250px;
+    height: auto;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-size: 8pt;
+}
+
+@media screen and (max-width: 700px) {
+    
+.history-button {
+    width: 30%;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+}
+
+h3 {
+    font-size: 2vw;
+}
+
+@media screen and (max-width: 700px) {
+    h3 {
+        font-size: 5vw;
+    }
+}
+

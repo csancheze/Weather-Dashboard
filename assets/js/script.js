@@ -2,7 +2,7 @@ var searchform = document.getElementById("city-input")
 var cityInput = document.getElementById("city")
 var historyContainer = document.getElementById("history")
 var todayWeather = document.getElementById("today-weather")
-var weatherCards = document.getElementById/("weather-cards")
+var weatherCards = document.getElementById("weather-cards")
 var city;
 var historyArray = ["empty","empty","empty","empty","empty","empty","empty","empty","empty","empty"]
 let i= 0
@@ -20,7 +20,7 @@ function getLocation() {
     }
   }
   
-  function showPosition(position) {
+function showPosition(position) {
     currentLatitude = position.coords.latitude;
     currentLongitude = position.coords.longitude;
     getCurrentCity()
@@ -31,13 +31,10 @@ var geoLocationApi = "http://api.positionstack.com/v1/reverse?access_key=6c580d9
 
 fetch(geoLocationApi)
     .then(function (response) {
-        console.log(response)
         if(response.ok) {
             response.json()
             .then(function(data){
-                console.log(data)
                 city = data.data[0].locality
-                console.log(city)
                 getCityLatLong()
             })
         }else {
@@ -63,14 +60,12 @@ function getCityLatLong() {
     var weatherApi = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=724b3d28609abb931270460752653a80"
     fetch(weatherApi)
         .then(function (response) {
-            console.log(response)
             if(response.ok) {
                 response.json()
                 .then(function(data){
-                    console.log(data)
                     var searchLatitude = data[0].lat
                     var searchLongitude = data[0].lon
-                    console.log(searchLatitude,searchLongitude)
+                    city=data[0].name
                     makeHistory() 
                     getWeather(searchLatitude,searchLongitude)
 
@@ -85,16 +80,12 @@ function getWeather(lat,long) {
     var weatherApi = "http://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude={part}&units=metric&appid=724b3d28609abb931270460752653a80"
     fetch(weatherApi)
         .then(function (response) {
-            console.log(response)
             if(response.ok) {
                 response.json()
                 .then(function(data){
-                    console.log(data)
                     var todayWeather = data.current
                     var nextFiveDays = data.daily.splice(1,5)
-                    console.log (todayWeather)
-                    console.log(nextFiveDays)
-                    renderCurrentWeather(todayWeather)
+                    renderCurrentWeather(todayWeather,)
                     renderNextWeather(nextFiveDays)
                 })
             }else {
@@ -103,39 +94,67 @@ function getWeather(lat,long) {
         })
 }
 
+//render weather info
+
 function renderCurrentWeather(today) {
     todayWeather.innerHTML=""
+    var cardTextDiv = document.createElement("div")
     var currentCity= city +" "+ moment().format("DD/MM/YY")
-    var cityDateEl = document.createElement("p")
+    var cityDateEl = document.createElement("h3")
+    cityDateEl.classList = "card-header"
     cityDateEl.textContent = currentCity
     var currentTemp = document.createElement("p")
+    currentTemp.classList = "card-text"
     currentTemp.textContent = "Temperature: "+today.temp +"°C"
     var currentWind = document.createElement("p")
+    currentWind.classList = "card-text"
     currentWind.textContent= "Wind: "+today.wind_speed +" m/s"
     var currentHumidity = document.createElement("p")
+    currentHumidity.classList = "card-text"
     currentHumidity.textContent= "Humidity: "+today.humidity + "%"
     var currentUV=document.createElement("p")
     currentUV.textContent="UV: "+today.uvi
     if (today.uvi < 3) {
-        currentUV.classList ="bg-sucess"
+        currentUV.classList ="bg-success"
     } else if (today.uvi < 8) {
-        currentUV.classList ="bg-warning"
-    } else currentUV.classList ="bg-danger"
-    todayWeather.append(cityDateEl,currentTemp,currentWind,currentHumidity,currentUV)
-
-    
-     
-
-
+        currentUV.classList ="bg-warning card-text"
+    } else currentUV.classList ="bg-danger card-text"
+    cardTextDiv.append(cityDateEl,currentTemp,currentWind,currentHumidity,currentUV)
+    cardTextDiv.classList="card justify-content-between w-40"
+    var weatherIcon = document.createElement("img")
+    weatherIcon.setAttribute("src", "./assets/images/"+today.weather[0].icon+".png")
+    weatherIcon.classList = "card-img main-img"
+    todayWeather.append(weatherIcon,cardTextDiv)
 }
 
 function renderNextWeather(nextFive) {
-    var oneDay = moment().add(1,"days").format("DD/MM/YY")
+    weatherCards.innerHTML=""
+    for (let i=0; i < nextFive.length; i++) {
+        var cardContainer = document.createElement("div")
+        cardContainer.classList = "card col-8 col-md-2 mx-auto mb-1"
+        cardContainer.setAttribute("style", "border-color:#31545B;border-width:4px")
+        var cardIcon = document.createElement("img")
+        cardIcon.setAttribute("src", "./assets/images/"+nextFive[i].weather[0].icon+".png")
+        cardIcon.classList = "card-img-bottom img-fluid"
+        var oneDay = moment().add(i+1,"days").format("DD/MM/YY")
+        var dayDate = document.createElement("h3")
+        dayDate.textContent=oneDay
+        dayDate.classList = "card-header"
+        var cardTemp = document.createElement("p")
+        cardTemp.classList = "card-text"
+        cardTemp.textContent = " Temperature min: "+ nextFive[i].temp.min +" / max: " + nextFive[i].temp.max
+        var cardWind = document.createElement("p")
+        cardWind.textContent= "Wind: "+ nextFive[i].wind_speed +" m/s"
+        cardWind.classList = "card-text"
+        var cardHumidity = document.createElement("p")
+        cardHumidity.textContent =  "Humidity: "+nextFive[i].humidity + "%"
+        cardHumidity.classList = "card-text"
+
+        cardContainer.append(dayDate,cardIcon,cardTemp,cardWind,cardHumidity)
+        weatherCards.append(cardContainer)
+
+    }
 }
-
-
-
-
 
 //history
 function makeHistory() {
@@ -145,9 +164,7 @@ function makeHistory() {
     } else {
         historyArray = (JSON.parse(historyArrayOld))
     }
-    console.log(historyArray)
     var historyIndex = parseInt(localStorage.getItem("index")) || 0
-    console.log(historyIndex)
     if (!historyArray.includes(city)) {
         historyArray[historyIndex] = city
         historyIndex +=1  
@@ -167,6 +184,7 @@ function renderHistory() {
     for (let i=0; i < historyArray.length ; i++) {
         if (historyArray[i] != "empty") {
             var historyButton = document.createElement("button")
+            historyButton.classList = "form-control m-1 btn btn-dark text-light history-button"
             historyButton.textContent = historyArray[i]
             historyButton.addEventListener("click",function(event){
                 event.preventDefault();
@@ -185,8 +203,7 @@ searchform.addEventListener("submit",weatherHandler)
 //init
 
 function init () {
-    getLocation()    
-   
+    getLocation()      
 }
 
 init();
