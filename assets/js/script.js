@@ -27,7 +27,7 @@ function showPosition(position) {
   }
 
 function getCurrentCity() {
-var geoLocationApi = "http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
+var geoLocationApi = "https://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
 
 fetch(geoLocationApi)
     .then(function (response) {
@@ -57,7 +57,7 @@ var weatherHandler = function (event) {
 }
 
 function getCityLatLong() {
-    var weatherApi = "http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=724b3d28609abb931270460752653a80"
+    var weatherApi = "https://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=724b3d28609abb931270460752653a80"
     fetch(weatherApi)
         .then(function (response) {
             if(response.ok) {
@@ -77,7 +77,7 @@ function getCityLatLong() {
 }
 
 function getWeather(lat,long) {
-    var weatherApi = "http://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude={part}&units=metric&appid=724b3d28609abb931270460752653a80"
+    var weatherApi = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude={part}&units=metric&appid=724b3d28609abb931270460752653a80"
     fetch(weatherApi)
         .then(function (response) {
             if(response.ok) {
