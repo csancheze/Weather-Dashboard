@@ -27,7 +27,7 @@ function showPosition(position) {
   }
 
 function getCurrentCity() {
-var geoLocationApi = "https://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
+var geoLocationApi = "http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
 
 fetch(geoLocationApi)
     .then(function (response) {
