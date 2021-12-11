@@ -27,7 +27,7 @@ function showPosition(position) {
   }
 
 function getCurrentCity() {
-var geoLocationApi = "http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
+var geoLocationApi = "https://cors-anywhere.herokuapp.com/http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
 
 fetch(geoLocationApi)
     .then(function (response) {
@@ -180,7 +180,6 @@ function makeHistory() {
 
 function renderHistory() {
     historyContainer.innerHTML=""
-    console.log(historyArray)
     for (let i=0; i < historyArray.length ; i++) {
         if (historyArray[i] != "empty") {
             var historyButton = document.createElement("button")
