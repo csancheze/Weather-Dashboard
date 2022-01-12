@@ -27,7 +27,7 @@ function showPosition(position) {
   }
 
 function getCurrentCity() {
-var geoLocationApi = "https://cors-anywhere.herokuapp.com/http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
+var geoLocationApi = "http://api.positionstack.com/v1/reverse?access_key=6c580d91db50a4e22cec5e385b8b595a&query="+currentLatitude+","+currentLongitude
 
 fetch(geoLocationApi)
     .then(function (response) {
@@ -135,6 +135,7 @@ function renderNextWeather(nextFive) {
         cardContainer.setAttribute("style", "border-color:#31545B;border-width:4px")
         var cardIcon = document.createElement("img")
         cardIcon.setAttribute("src", "./assets/images/"+nextFive[i].weather[0].icon+".png")
+        cardIcon.setAttribute("style","max-height:134px; max-width:134px; margin: auto")
         cardIcon.classList = "card-img-bottom img-fluid"
         var oneDay = moment().add(i+1,"days").format("DD/MM/YY")
         var dayDate = document.createElement("h3")
