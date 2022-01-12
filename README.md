@@ -1,4 +1,4 @@
-# Weather-Dashboard
+# Weather Dashboard
 
 by Cesar San.
 
