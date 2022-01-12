@@ -24,6 +24,8 @@ To accomplish this objective, the weather API documentation was reviewed first t
 
 ![Screenshot of the webpage showing it working as expected](./assets/images/screenshot.png)
 
+![Screenshot of the webpage showing it working on mobile](./assets/images/screenshot2.png)
+
  [Final Product:Github repository](https://github.com/csancheze/Weather-Dashboard/)
 
  [Final Product:Weather Dashboard](https://csancheze.github.io/Weather-Dashboard/)
