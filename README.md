@@ -16,7 +16,7 @@ List of Technologies:
 
 -APIs.
 
-NXT movie is an app to look for a movie and get the streaming services you can use to watch it.
+Weather Dashboard gives you your local weather (Free geolocation API is blocked by github) and let you look for the weather forecast of any city.
 
 The task was to create a weather app in which you could enter a city and get the current weather and a five day weather forecast using API's and dinamic html and css.
 
